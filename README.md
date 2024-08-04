@@ -23,9 +23,15 @@ Quality attributes: The output of this module should be accurate, reliable (cons
 
 - Full Text Search:
 This module is designed to search for specific keywords within a PDF file and extract sentences containing those keywords. The module utilizes the PyPDF2 library for reading PDF files and regular expressions to split the text into sentences.The key terms from the user are input and they are used to identify patterns/sentences surrounding this term. Through iteration, the relevant sentences, values and phases are appended and written to file.
-Quality attributes: This module should provide relevant and flexible results in addition to accuracy and speed. 
+Quality attributes: This module should provide relevant and flexible results in addition to accuracy and speed.
 
 - LLM Integration:
 LLMs such as GPT-4 will inherently search for all resources and data which it is trained from while trying to generate a response. However, as financial reports contain very critical and sensitive data, the goal is to ensure the model only searches for relevant company filings instead of all online resources. In order to achieve this, another layer of instruction is added in the program that explicitly tells the system to only search for relevant company filings after the model receives a user query. 
 Quality attributes: Verify the numerical values provided form the model’s response is strictly matching the numbers from the company filings (10-Q/10-K)
+
+
+## Demo
+https://drive.google.com/file/d/1K7ebaJLoAzS88baaDdcfwK48lWJrbzLj/view?usp=sharing
+
+
 
