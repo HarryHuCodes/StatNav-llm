@@ -3,6 +3,7 @@ import re
 
 API_ID = '8dcd05587fc861300e5ff8f9'
 BASE_CURRENCY = 'USD'
+file_path = "../output.txt"
 # Fetch exchange rates from the API
 exchange_rate_url = "https://v6.exchangerate-api.com/v6/{API_ID}/latest/{BASE_CURRENCY}"
 response = requests.get(exchange_rate_url)

@@ -30,11 +30,14 @@ def search_pdf(file_path, keywords):
 
 # Example usage
 file_path = "/Users/mac/Desktop/llm-agent/output.pdf"
-keyword = ["Gross Margin"]
+keyword = ["Gross Margin", "sales", "Business", "Risk Factors", "Risk Factor", "Unresolved Staff Comment", "Unresolved Staff Comment", "Property", "Properties", "Legal Proceeding", "Legal Proceedings",
+           "Selected Financial Data", "Market", "Common Equity", "Stockholder", "Equity Securities", "Financial Condition", "Results of Operations", "Result of Operations", "Result of Operation",
+           "Quantitative Disclosures", "Qualitative Disclosures", "Financial Statements", "Supplementary Data", "Controls and Procedures", "Control and Procedure", "Other Information"]
+
 
 results = search_pdf(file_path, keyword)
 output_file = "output.txt"
-with open(output_file, "w") as f:
+with open(output_file, "w",encoding='utf-8') as f:
     f.truncate(0) 
     merged_sentences = "\n".join(results)
     f.write(merged_sentences)
