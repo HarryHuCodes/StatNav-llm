@@ -1,4 +1,7 @@
 # StatNav Introduction
+![Capture](https://github.com/user-attachments/assets/d6091239-d517-409b-b33d-bca864e7fcd7)
+
+
 ## Purpose and Motivation
 With the proliferation of company filings and ever-growing performance indicators, modern-day businesses can often be overwhelmed by the sheer volume of financial data. It has become increasingly time-consuming for data analysts to scope-in on the relevant statistics in the face of exceedingly large datasets. Having to look through staggering amounts of textual documents, data analysts may be demotivated, distracted or even lose sight of important details. There is a need for a reliable, accurate and consistent tool that can save analysts from the mandune task of traversing countless files for certain statistics - by providing them with the data they need to write reports and formulate insights. 
 
