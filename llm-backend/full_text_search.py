@@ -9,7 +9,6 @@ def search_pdf(file_path, keywords):
         with open(file_path, "rb") as file:
             pdf = PyPDF2.PdfReader(file)
             num_pages = len(pdf.pages)
-
             index = 0
             for page_num in range(num_pages):
                 page = pdf.pages[page_num]
@@ -30,15 +29,14 @@ def search_pdf(file_path, keywords):
     return result_sentences
 
 # Example usage
-file_path = "ECE461 prelab5.pdf"
-keyword = ["STP", "MAC"]
-
+file_path = "/Users/mac/Desktop/llm-agent/output.pdf"
+keyword = ["Gross Margin"]
 
 results = search_pdf(file_path, keyword)
 output_file = "output.txt"
 with open(output_file, "w") as f:
-    f.truncate(0)  # Clear the file
+    f.truncate(0) 
     merged_sentences = "\n".join(results)
     f.write(merged_sentences)
 
-
+print(f"Results have been saved to {output_file}.")

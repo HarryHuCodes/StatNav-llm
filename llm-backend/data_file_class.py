@@ -1,9 +1,6 @@
 from datetime import datetime 
 
-
-
 class Data_file:
-
 
     def __init__(self, name, file_type, created_on, content, organization, details=None, importance=None,  document_id=-1):
         self.doc_name = name                 
@@ -19,8 +16,7 @@ class Data_file:
         else:
             self.size = size       """                   #int 
      
-
-
+     
 #Method to convert obj instance into dictionary
 
     def to_dict(self):
