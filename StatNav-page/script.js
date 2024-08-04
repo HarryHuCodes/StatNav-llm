@@ -4,8 +4,9 @@ const chatbox = document.querySelector(".chatbox");
 const chatInput = document.querySelector(".chat-input textarea");
 const sendChatBtn = document.querySelector(".chat-input span");
 let userMessage = null; // Variable to store user's message
-const API_KEY = "PASTE-YOUR-API-KEY"; // Paste your API key here
+const API_KEY = "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"; // Paste your API key here
 const inputInitHeight = chatInput.scrollHeight;
+
 const createChatLi = (message, className) => {
     // Create a chat <li> element with passed message and className
     const chatLi = document.createElement("li");
@@ -16,28 +17,44 @@ const createChatLi = (message, className) => {
     return chatLi; // return chat <li> element
 }
 const generateResponse = (chatElement) => {
-    const API_URL = "https://api.openai.com/v1/chat/completions";
+    const API_URL = "http://localhost:5000/chat";  // Call this address
     const messageElement = chatElement.querySelector("p");
-    // Define the properties and message for the API request
+
     const requestOptions = {
         method: "POST",
         headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${API_KEY}`
+            "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            model: "gpt-4-1106-preview",
-            messages: [{role: "user", content: userMessage}],
+            prompt: userMessage
+            
         })
-    }
-    // Send POST request to API, get response and set the reponse as paragraph text
-    fetch(API_URL, requestOptions).then(res => res.json()).then(data => {
-        messageElement.textContent = data.choices[0].message.content.trim();
-    }).catch(() => {
+    };
+    // Send POST request to backend, get response, and set the response as paragraph text
+fetch(API_URL, requestOptions)
+    .then(res => {
+        if (!res.ok) {
+            throw new Error(`Server error: ${res.status}`);
+        }
+        return res.json();
+    })
+    .then(data => {
+        if(data.response) {
+            messageElement.textContent = data.response.trim();
+        } else {
+            // Handle any other errors or unexpected response formats
+            throw new Error("Unexpected response format");
+        }
+    })
+    .catch((error) => {
+        console.error(error);
         messageElement.classList.add("error");
         messageElement.textContent = "Oops! Something went wrong. Please try again.";
-    }).finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
-}
+    })
+    .finally(() => chatbox.scrollTo(0, chatbox.scrollHeight));
+
+};
+
 const handleChat = () => {
     userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
     if(!userMessage) return;
