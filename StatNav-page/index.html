@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Filings Search</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Search for Company Filings</h1>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" id="companyName" name="companyName" class="form-control" placeholder="Company Name">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="searchCompanies()">Search Companies</button>
+                </div>
+            </div>
+            <div id="companyResults" class="mb-5"></div>
+        </div>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <input type="text" id="cik" name="cik" class="form-control" placeholder="CIK">
+                <input type="text" id="documentType" name="documentType" class="form-control" placeholder="Document Type">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="searchDocuments()">Search Documents</button>
+                </div>
+            </div>
+            <div id="documentResults"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function searchCompanies() {
+        var companyName = $('#companyName').val();
+        $.ajax({
+            url: '/search_companies',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ companyName: companyName }),
+            success: function(response) {
+                var companiesHtml = response.map(function(company) {
+                    return '<div class="alert alert-info" role="alert">CIK: ' + company.CIK + ', Company Name: ' + company['Company Name'] + ', State/Country: ' + company['State/Country'] + '</div>';
+                }).join('');
+                $('#companyResults').html(companiesHtml);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+function searchDocuments() {
+    var cik = $('#cik').val();
+    var documentType = $('#documentType').val();
+    $.ajax({
+        url: '/search_documents',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ cik: cik, documentType: documentType }),
+        success: function(response) {
+            var documentsHtml = response.map(function(doc) {
+                // Update the link to use the download_document route
+                // We encode the document link to ensure it's correctly interpreted as a URL parameter
+                var encodedDocLink = encodeURIComponent(doc['Document Link']);
+                var downloadLink = `/download_document?url=${encodedDocLink}`;
+                return `<div class="alert alert-secondary" role="alert">
+                            Filing Date: ${doc['Filing Date']}, 
+                            <a href="${downloadLink}" target="_blank">Download Document</a>
+                        </div>`;
+            }).join('');
+            $('#documentResults').html(documentsHtml);
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}
+
+</script>
+</body>
+</html>
